@@ -1,15 +1,14 @@
 #!/bin/bash
+# 自动备份vault文件夹中的所有子备份单元
 
 # 默认参数值
 monthly_limit=12
 daily_limit=35
-enable_limit="true"
 
 # 解析参数
-while getopts "d:l:m:b:" opt; do
+while getopts "d:m:b:" opt; do
     case $opt in
         d) backup_folder="$OPTARG";;
-        l) enable_limit="$OPTARG";;
         m) monthly_limit="$OPTARG";;
         b) daily_limit="$OPTARG";;
         \?) echo "无效的选项: -$OPTARG" >&2
@@ -26,6 +25,6 @@ fi
 # 遍历remote_backup文件夹中的子文件夹
 for subfolder in "$backup_folder"/*; do
     if [ -d "$subfolder" ]; then
-        ./archive_core.sh -d "$subfolder" -l "$enable_limit" -m "$monthly_limit" -b "$daily_limit"
+        ./archive_core.sh -d "$subfolder" -m "$monthly_limit" -b "$daily_limit"
     fi
 done
