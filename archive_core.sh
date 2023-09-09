@@ -77,7 +77,7 @@ if [ -d "$main_folder" ]; then  # 确保子文件夹内存在main文件夹
             num_all_backups=${#all_backups[@]}
             if [ $num_all_backups -gt $daily_limit ]; then
                 num_to_delete=$((num_all_backups - daily_limit))
-                sorted_all_backups=($(ls -t "$archive_folder"/*.tar.gz))
+                sorted_all_backups=($(ls -tr "$archive_folder"/*.tar.gz))
                 for ((i = 0; i < num_to_delete; i++)); do
                     backup_to_delete=${sorted_all_backups[$i]}
                     rm "$backup_to_delete"
@@ -92,7 +92,7 @@ if [ -d "$main_folder" ]; then  # 确保子文件夹内存在main文件夹
             num_monthly_backups=${#monthly_backups[@]}
             if [ $num_monthly_backups -gt $monthly_limit ]; then
                 num_to_delete=$((num_monthly_backups - monthly_limit))
-                sorted_monthly_backups=($(ls -t "$archive_folder/monthly"/*.tar.gz))
+                sorted_monthly_backups=($(ls -tr "$archive_folder/monthly"/*.tar.gz))
                 for ((i = 0; i < num_to_delete; i++)); do
                     monthly_backup_to_delete=${sorted_monthly_backups[$i]}
                     rm "$monthly_backup_to_delete"
